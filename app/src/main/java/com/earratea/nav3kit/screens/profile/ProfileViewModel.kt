@@ -1,6 +1,8 @@
 package com.earratea.nav3kit.screens.profile
 
-import androidx.lifecycle.ViewModel
+import com.earratea.nav3kit.navigation.RouterViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ProfileViewModel : ViewModel() {
-}
+@HiltViewModel
+class ProfileViewModel @Inject constructor() : RouterViewModel()
