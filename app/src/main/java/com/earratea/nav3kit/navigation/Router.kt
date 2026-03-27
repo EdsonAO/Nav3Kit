@@ -13,21 +13,24 @@ class Router @Inject constructor() {
     private val _commands = Channel<RouterAction>(Channel.UNLIMITED)
     val commands: ReceiveChannel<RouterAction> = _commands
 
-    private val resultListeners = ConcurrentHashMap<String, (Any) -> Unit>()
+    private val resultListeners = ConcurrentHashMap<String, (ResultValue) -> Unit>()
 
     fun navigateTo(route: NavKey) {
         _commands.trySend(RouterAction.NavigateTo(route))
     }
 
-    fun goBack() {
+    fun goBack(results: ResultBuilder.() -> Unit = {}) {
+        ResultBuilder(resultListeners).apply(results)
         _commands.trySend(RouterAction.GoBack)
     }
 
-    fun replaceWith(route: NavKey) {
+    fun replaceWith(route: NavKey, results: ResultBuilder.() -> Unit = {}) {
+        ResultBuilder(resultListeners).apply(results)
         _commands.trySend(RouterAction.ReplaceWith(route))
     }
 
-    fun popToRoute(route: NavKey, inclusive: Boolean = false) {
+    fun popToRoute(route: NavKey, inclusive: Boolean = false, results: ResultBuilder.() -> Unit = {}) {
+        ResultBuilder(resultListeners).apply(results)
         _commands.trySend(RouterAction.PopToRoute(route, inclusive))
     }
 
@@ -35,16 +38,18 @@ class Router @Inject constructor() {
         _commands.trySend(RouterAction.ClearStackAndNavigate(route))
     }
 
-    fun <T : Any> sendResult(key: String, data: T) {
-        (resultListeners.remove(key) as? (T) -> Unit)?.invoke(data)
-    }
-
-    fun <T : Any> setResultListener(key: String, listener: (T) -> Unit) {
+    fun <T : ResultValue> expectResult(key: ResultKey<T>, listener: (T) -> Unit) {
         @Suppress("UNCHECKED_CAST")
-        resultListeners[key] = listener as (Any) -> Unit
+        resultListeners[key.key] = listener as (ResultValue) -> Unit
     }
 
-    fun removeResultListener(key: String) {
-        resultListeners.remove(key)
+    fun dismissResult(key: ResultKey<*>) {
+        resultListeners.remove(key.key)
+    }
+}
+
+class ResultBuilder(private val listeners: ConcurrentHashMap<String, (ResultValue) -> Unit>) {
+    fun <T : ResultValue> result(key: ResultKey<T>, data: T) {
+        listeners[key.key]?.invoke(data)
     }
 }

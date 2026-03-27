@@ -22,9 +22,14 @@ class HomeViewModel @Inject constructor(
         field = MutableStateFlow(HomeUiState())
 
     init {
-        router.setResultListener<Int>(ProfileResult.RANDOM_NUMBER_KEY) { number ->
-            uiState.update { it.copy(profileResult = number) }
+        router.expectResult(ProfileResult.RandomNumber) { result ->
+            uiState.update { it.copy(profileResult = result.value) }
         }
+    }
+
+    override fun onCleared() {
+        router.dismissResult(ProfileResult.RandomNumber)
+        super.onCleared()
     }
 
     fun handleEvent(event: HomeEvent) {

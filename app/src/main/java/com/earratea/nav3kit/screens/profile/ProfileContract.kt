@@ -1,7 +1,10 @@
 package com.earratea.nav3kit.screens.profile
 
+import com.earratea.nav3kit.navigation.IntResult
+import com.earratea.nav3kit.navigation.ResultKey
+
 object ProfileResult {
-    const val RANDOM_NUMBER_KEY = "profile_random_number"
+    val RandomNumber = ResultKey<IntResult>("profile_random_number")
 }
 
 data class ProfileUiState(
