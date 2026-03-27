@@ -36,7 +36,7 @@ class Router @Inject constructor() {
     }
 
     fun <T : Any> sendResult(key: String, data: T) {
-        (resultListeners[key] as? (T) -> Unit)?.invoke(data)
+        (resultListeners.remove(key) as? (T) -> Unit)?.invoke(data)
     }
 
     fun <T : Any> setResultListener(key: String, listener: (T) -> Unit) {

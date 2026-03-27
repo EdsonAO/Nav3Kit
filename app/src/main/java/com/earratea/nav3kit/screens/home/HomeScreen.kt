@@ -55,6 +55,13 @@ private fun HomeContent(
                 text = "Home",
                 style = MaterialTheme.typography.headlineLarge,
             )
+            uiState.profileResult?.let { result ->
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "Profile result: $result",
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+            }
             Spacer(modifier = Modifier.height(32.dp))
             Button(
                 onClick = dropUnlessStarted {

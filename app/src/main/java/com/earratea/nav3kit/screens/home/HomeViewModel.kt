@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.earratea.nav3kit.navigation.Router
 import com.earratea.nav3kit.screens.detail.DetailRoute
+import com.earratea.nav3kit.screens.profile.ProfileResult
 import com.earratea.nav3kit.screens.profile.ProfileRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -19,6 +20,12 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     val uiState: StateFlow<HomeUiState>
         field = MutableStateFlow(HomeUiState())
+
+    init {
+        router.setResultListener<Int>(ProfileResult.RANDOM_NUMBER_KEY) { number ->
+            uiState.update { it.copy(profileResult = number) }
+        }
+    }
 
     fun handleEvent(event: HomeEvent) {
         when (event) {
