@@ -3,7 +3,6 @@ package com.earratea.nav3kit.screens.home
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation3.runtime.NavKey
 import com.earratea.nav3kit.navigation.EntryProviderInstaller
-import com.earratea.nav3kit.navigation.RouterEffect
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,10 +19,9 @@ object HomeModule {
 
     @IntoSet
     @Provides
-    fun provideEntryProviderInstaller(): EntryProviderInstaller = { backStack ->
+    fun provideEntryProviderInstaller(): EntryProviderInstaller = {
         entry<HomeRoute> {
             val viewModel: HomeViewModel = hiltViewModel()
-            RouterEffect(emitter = viewModel, backStack = backStack)
             HomeScreen(viewModel = viewModel)
         }
     }

@@ -1,9 +1,7 @@
 package com.earratea.nav3kit.screens.profile
 
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation3.runtime.NavKey
 import com.earratea.nav3kit.navigation.EntryProviderInstaller
-import com.earratea.nav3kit.navigation.RouterEffect
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,10 +18,8 @@ object ProfileModule {
 
     @IntoSet
     @Provides
-    fun provideEntryProviderInstaller(): EntryProviderInstaller = { backStack ->
+    fun provideEntryProviderInstaller(): EntryProviderInstaller = {
         entry<ProfileRoute> {
-            val viewModel: ProfileViewModel = hiltViewModel()
-            RouterEffect(emitter = viewModel, backStack = backStack)
             ProfileScreen()
         }
     }

@@ -1,7 +1,8 @@
 package com.earratea.nav3kit.screens.home
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.earratea.nav3kit.navigation.RouterViewModel
+import com.earratea.nav3kit.navigation.Router
 import com.earratea.nav3kit.screens.detail.DetailRoute
 import com.earratea.nav3kit.screens.profile.ProfileRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +14,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() : RouterViewModel() {
+class HomeViewModel @Inject constructor(
+    private val router: Router
+) : ViewModel() {
     val uiState: StateFlow<HomeUiState>
         field = MutableStateFlow(HomeUiState())
 
@@ -38,7 +41,7 @@ class HomeViewModel @Inject constructor() : RouterViewModel() {
         }
 
         val randomId = (0..100).random().toString()
-        navigateTo(DetailRoute(randomId))
+        router.navigateTo(DetailRoute(randomId))
     }
 
     private fun handleGoToProfileClicked() = viewModelScope.launch {
@@ -54,6 +57,6 @@ class HomeViewModel @Inject constructor() : RouterViewModel() {
             it.copy(isLoading = false)
         }
 
-        navigateTo(ProfileRoute)
+        router.navigateTo(ProfileRoute)
     }
 }

@@ -11,10 +11,13 @@ import com.earratea.nav3kit.screens.home.HomeRoute
 
 @Composable
 fun AppHostNav(
+    router: Router,
     entryScopes: Set<EntryProviderInstaller>,
     modifier: Modifier = Modifier
 ) {
     val backStack = rememberNavBackStack(HomeRoute)
+
+    RouterEffect(router = router, backStack = backStack)
 
     NavDisplay(
         entryDecorators = listOf(
@@ -25,7 +28,7 @@ fun AppHostNav(
         onBack = { backStack.removeLastOrNull() },
         entryProvider = entryProvider {
             entryScopes.forEach { builder ->
-                this.builder(backStack)
+                this.builder()
             }
         },
         modifier = modifier

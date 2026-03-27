@@ -3,7 +3,6 @@ package com.earratea.nav3kit.screens.detail
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation3.runtime.NavKey
 import com.earratea.nav3kit.navigation.EntryProviderInstaller
-import com.earratea.nav3kit.navigation.RouterEffect
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,15 +21,13 @@ object DetailModule {
 
     @IntoSet
     @Provides
-    fun provideEntryProviderInstaller(): EntryProviderInstaller = { backStack ->
+    fun provideEntryProviderInstaller(): EntryProviderInstaller = {
         entry<DetailRoute> { key ->
             val viewModel = hiltViewModel<DetailViewModel, DetailViewModel.Factory>(
                 creationCallback = { factory ->
                     factory.create(key)
                 }
             )
-
-            RouterEffect(emitter = viewModel, backStack = backStack)
             DetailScreen(viewModel = viewModel)
         }
     }
