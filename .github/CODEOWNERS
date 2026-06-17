@@ -1,0 +1,18 @@
+# Nav3Kit code owners.
+#
+# These owners are auto-requested for review on matching paths.
+# Order matters: the LAST matching pattern takes precedence.
+# Docs: https://docs.github.com/articles/about-code-owners
+#
+# Add maintainers' GitHub usernames below as friends join the project.
+
+# Default owner for everything in the repo.
+*                       @EdsonAO
+
+# The navigation core — the library surface. Keep ownership tight here.
+# /app/src/main/java/com/earratea/nav3kit/navigation/   @EdsonAO
+
+# Build & dependency configuration.
+/gradle/                @EdsonAO
+*.gradle.kts            @EdsonAO
+/gradle/libs.versions.toml  @EdsonAO
