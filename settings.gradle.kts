@@ -25,3 +25,5 @@ dependencyResolutionManagement {
 rootProject.name = "Nav3Kit"
 include(":app")
 include(":nav3kit")
+include(":demo-hilt")
+include(":demo-koin")
