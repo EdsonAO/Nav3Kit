@@ -23,7 +23,7 @@ Run the checks locally:
 
 - Keep changes focused — one logical change per PR.
 - Add or update tests for any behavior change.
-- Update the `README.md` if you change public API or usage.
+- **Run the `/update-docs` Claude Code skill before every commit that adds new changes to your PR.** It reviews the diff on your branch and updates `README.md` (and other docs) for any user-facing change, while deliberately skipping internal churn so the docs stay clean. This keeps documentation from drifting away from the code.
 - If this is your first contribution, add yourself to the [`CONTRIBUTORS`](CONTRIBUTORS) file in the same PR.
 
 ## Commit messages
